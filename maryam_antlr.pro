@@ -15,7 +15,8 @@ SOURCES += \
     LULUListener.cpp \
     LULUParser.cpp \
     variable.cpp \
-    subroutine.cpp
+    subroutine.cpp \
+    mlululistener.cpp
 
 DISTFILES += \
     FinalLexer.tokens \
@@ -36,7 +37,8 @@ HEADERS += \
     LULUListener.h \
     LULUParser.h \
     variable.h \
-    subroutine.h
+    subroutine.h \
+    mlululistener.h
 
 LIBS+=$$PWD/include/AdsLib-Linux.a\
       $$PWD/include/libantlr4-runtime.a
