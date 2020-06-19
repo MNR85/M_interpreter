@@ -23,29 +23,35 @@ public:
   virtual void enterType_def(LULUParser::Type_defContext *ctx) = 0;
   virtual void exitType_def(LULUParser::Type_defContext *ctx) = 0;
 
+  virtual void enterFun_def(LULUParser::Fun_defContext *ctx) = 0;
+  virtual void exitFun_def(LULUParser::Fun_defContext *ctx) = 0;
+
   virtual void enterComponent(LULUParser::ComponentContext *ctx) = 0;
   virtual void exitComponent(LULUParser::ComponentContext *ctx) = 0;
 
-  virtual void enterAccess_modifier(LULUParser::Access_modifierContext *ctx) = 0;
-  virtual void exitAccess_modifier(LULUParser::Access_modifierContext *ctx) = 0;
+  virtual void enterBlock(LULUParser::BlockContext *ctx) = 0;
+  virtual void exitBlock(LULUParser::BlockContext *ctx) = 0;
 
-  virtual void enterVar_def(LULUParser::Var_defContext *ctx) = 0;
-  virtual void exitVar_def(LULUParser::Var_defContext *ctx) = 0;
-
-  virtual void enterType(LULUParser::TypeContext *ctx) = 0;
-  virtual void exitType(LULUParser::TypeContext *ctx) = 0;
-
-  virtual void enterVar_val(LULUParser::Var_valContext *ctx) = 0;
-  virtual void exitVar_val(LULUParser::Var_valContext *ctx) = 0;
-
-  virtual void enterFun_def(LULUParser::Fun_defContext *ctx) = 0;
-  virtual void exitFun_def(LULUParser::Fun_defContext *ctx) = 0;
+  virtual void enterArgs_varP(LULUParser::Args_varPContext *ctx) = 0;
+  virtual void exitArgs_varP(LULUParser::Args_varPContext *ctx) = 0;
 
   virtual void enterArgs_var(LULUParser::Args_varContext *ctx) = 0;
   virtual void exitArgs_var(LULUParser::Args_varContext *ctx) = 0;
 
-  virtual void enterBlock(LULUParser::BlockContext *ctx) = 0;
-  virtual void exitBlock(LULUParser::BlockContext *ctx) = 0;
+  virtual void enterVar_def(LULUParser::Var_defContext *ctx) = 0;
+  virtual void exitVar_def(LULUParser::Var_defContext *ctx) = 0;
+
+  virtual void enterVar_val(LULUParser::Var_valContext *ctx) = 0;
+  virtual void exitVar_val(LULUParser::Var_valContext *ctx) = 0;
+
+  virtual void enterExpr(LULUParser::ExprContext *ctx) = 0;
+  virtual void exitExpr(LULUParser::ExprContext *ctx) = 0;
+
+  virtual void enterAccess_modifier(LULUParser::Access_modifierContext *ctx) = 0;
+  virtual void exitAccess_modifier(LULUParser::Access_modifierContext *ctx) = 0;
+
+  virtual void enterType(LULUParser::TypeContext *ctx) = 0;
+  virtual void exitType(LULUParser::TypeContext *ctx) = 0;
 
   virtual void enterStmt(LULUParser::StmtContext *ctx) = 0;
   virtual void exitStmt(LULUParser::StmtContext *ctx) = 0;
@@ -58,9 +64,6 @@ public:
 
   virtual void enterRef(LULUParser::RefContext *ctx) = 0;
   virtual void exitRef(LULUParser::RefContext *ctx) = 0;
-
-  virtual void enterExpr(LULUParser::ExprContext *ctx) = 0;
-  virtual void exitExpr(LULUParser::ExprContext *ctx) = 0;
 
   virtual void enterFunc_call(LULUParser::Func_callContext *ctx) = 0;
   virtual void exitFunc_call(LULUParser::Func_callContext *ctx) = 0;

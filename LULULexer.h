@@ -16,13 +16,13 @@ public:
     T__7 = 8, T__8 = 9, T__9 = 10, T__10 = 11, T__11 = 12, T__12 = 13, T__13 = 14, 
     T__14 = 15, T__15 = 16, T__16 = 17, T__17 = 18, T__18 = 19, T__19 = 20, 
     T__20 = 21, T__21 = 22, T__22 = 23, T__23 = 24, T__24 = 25, T__25 = 26, 
-    T__26 = 27, T__27 = 28, T__28 = 29, T__29 = 30, T__30 = 31, T__31 = 32, 
-    T__32 = 33, T__33 = 34, T__34 = 35, T__35 = 36, T__36 = 37, T__37 = 38, 
-    T__38 = 39, T__39 = 40, T__40 = 41, T__41 = 42, T__42 = 43, T__43 = 44, 
-    T__44 = 45, T__45 = 46, T__46 = 47, T__47 = 48, T__48 = 49, T__49 = 50, 
-    T__50 = 51, T__51 = 52, T__52 = 53, WHITESPACE = 54, COMMENT = 55, INT_CONST = 56, 
-    REAL_CONST = 57, BOOL_CONST = 58, ID = 59, STRING_CONST = 60, RELATIONAL = 61, 
-    ARITHMETIC = 62, LOGICAL = 63, BITWISE = 64
+    T__26 = 27, T__27 = 28, WHITESPACE = 29, COMMENT = 30, INT_CONST = 31, 
+    REAL_CONST = 32, BOOL_CONST = 33, ID = 34, STRING_CONST = 35, RELATIONAL = 36, 
+    ARITHMETIC = 37, LOGICAL = 38, BITWISE = 39, PRIVATE = 40, PUBLIC = 41, 
+    PROTECTED = 42, FOR = 43, WHILE = 44, INT = 45, BOOL = 46, FLOAT = 47, 
+    STRING = 48, CONST = 49, FUNCTION = 50, BREAK = 51, CONTINUE = 52, DESTRUCT = 53, 
+    THIS = 54, SUPER = 55, ALLOCATE = 56, READ = 57, WRITE = 58, NIL = 59, 
+    IF = 60, ELSE = 61, SWITCH = 62, CASEOF = 63, DEFAULT = 64
   };
 
   LULULexer(antlr4::CharStream *input);

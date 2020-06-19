@@ -5,40 +5,33 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp \
-    lulu_listener.cpp \
-    FinalParser.cpp \
-    FinalListener.cpp \
-    FinalLexer.cpp \
-    FinalBaseListener.cpp \
     LULUBaseListener.cpp \
     LULULexer.cpp \
     LULUListener.cpp \
     LULUParser.cpp \
     variable.cpp \
     subroutine.cpp \
-    mlululistener.cpp
+    mlululistener.cpp \
+    antlrerrorlistenerm.cpp \
+    type.cpp
 
 DISTFILES += \
-    FinalLexer.tokens \
-    FinalLexer.interp \
-    Final.tokens \
-    Final.interp \
     LULU.interp \
     LULU.tokens \
     LULULexer.interp \
-    LULULexer.tokens
+    LULULexer.tokens \
+    sample.txt
 
 HEADERS += \
-    FinalListener.h \
-    FinalLexer.h \
-    FinalBaseListener.h \
     LULUBaseListener.h \
     LULULexer.h \
     LULUListener.h \
     LULUParser.h \
     variable.h \
     subroutine.h \
-    mlululistener.h
+    mlululistener.h \
+    antlrerrorlistenerm.h \
+    type.h
 
 LIBS+=$$PWD/include/AdsLib-Linux.a\
       $$PWD/include/libantlr4-runtime.a

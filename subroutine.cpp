@@ -26,11 +26,11 @@ void Subroutine::setSubRoutineStatements(LULUParser::BlockContext *subRoutineSta
 string Subroutine::ToString()
 {
     string returnS = "";
-    returnS += returnVal.name + "!"+_subRoutineName+"\r\n";
+    returnS += returnVal.at(0).name + "!"+_subRoutineName+"\r\n";
     for(int i=0; i<variableCtx.size(); i++){
         returnS += variableCtx.at(i).ToString();
     }
-    returnS += "Return Value: "+returnVal.ToString();
+    returnS += "Return Value: "+returnVal.at(0).ToString();
     returnS += "\r\n";
     return returnS;
 }
@@ -46,7 +46,7 @@ vector<Variable *> Subroutine::getSubRoutineVariables()
 
 bool Subroutine::isReturnValReady()
 {
-    return returnVal.evaluated;
+    return returnVal.at(0).evaluated;
 }
 
 bool Subroutine::getVariableByIdx(int idx, Variable &localVar)
@@ -99,15 +99,25 @@ bool Subroutine::getVariableByName(string name, Variable &localVar)
 
 Variable *Subroutine::getReturnVal()
 {
-    return &returnVal;
+    return &returnVal.at(0);
 }
 
-string Subroutine::getSubRoutineReturnType()
+vector<Variable> Subroutine::getSubRoutineReturnType() const
 {
-    return returnVal.type;
+    return returnVal;
 }
 
-void Subroutine::setSubRoutineReturnType(string subRoutineReturnType)
+void Subroutine::setSubRoutineReturnType(const vector<Variable> &returnVars)
 {
-    returnVal.type = subRoutineReturnType;
+    returnVal =returnVars;
 }
+
+//string Subroutine::getSubRoutineReturnType()
+//{
+//    return returnVal.at(0).type;
+//}
+
+//void Subroutine::setSubRoutineReturnType(string subRoutineReturnType)
+//{
+//    returnVal.at(0).type = subRoutineReturnType;
+//}

@@ -10,11 +10,11 @@ class Subroutine
 public:
     Subroutine();
 
-private:    
+private:
     string _subRoutineName;
     LULUParser::BlockContext* _subRoutineStatements;
 
-    Variable returnVal;
+    vector<Variable> returnVal;
     vector<Variable> variableCtx;
 public:
 
@@ -28,8 +28,8 @@ public:
 
     Variable* getReturnVal();
 
-    string getSubRoutineReturnType();
-    void setSubRoutineReturnType(string getSubRoutineReturnType);
+    vector<Variable> getSubRoutineReturnType() const;
+    void setSubRoutineReturnType(const vector<Variable> &returnVars);
 
     string getSubRoutineName();
     void setSubRoutineName(string getSubRoutineName);

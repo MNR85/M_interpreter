@@ -4,25 +4,14 @@ grammar LULU;
 program:         ft_def+; //1
 ft_def:          ( type_def | fun_def ); //1
 type_def:        type ID ( ':' ID )? '{' component+ '}';//1
+fun_def:         ( '(' args_var ')' '=' )? FUNCTION ID '(' args_varP? ')' block;//1
 component:       access_modifier? ( var_def | fun_def );//1
-access_modifier: ( PRIVATE| PUBLIC | PROTECTED);//1
-var_def:         CONST? type var_val ( ',' var_val )* ';';//1
-type:            INT | BOOL | FLOAT | STRING | ID;//1
-var_val:         ref ('=' expr)?;//1
-fun_def:         ( '(' args_var ')' '=' )? FUNCTION ID '(' args_var? ')' block;//1
-args_var:        type('['']')*ID
+block:           '{' ( var_def | stmt )* '}';//1
+args_varP: args_var;
+args_var:        type('['']')*ID//1
         |        args_var ','type ( '[' ']' )* ID;
-block:           '{' ( var_def | stmt )* '}';
-stmt:            assign ';'
-    |            func_call ';'
-    |            cond_stmt
-    |            loop_stmt
-    |            BREAK ';'
-    |            CONTINUE ';'
-    |            DESTRUCT ( '[' ']' )* ID ';';
-assign:          ( var | '(' var ( ',' var )* ')' ) '=' expr;
-var:             ( ( THIS | SUPER ) '.' )? ref ( '.' ref )*;
-ref:             ID ( '[' expr ']' )*;
+var_def:         CONST? type var_val ( ',' var_val )* ';';//1
+var_val:         ref ('=' expr)?;//1
 expr:            expr  binary_op  expr
     |            '(' expr ')'
     |            unary_op expr
@@ -32,6 +21,20 @@ expr:            expr  binary_op  expr
     |            var
     |            list
     |            NIL;
+
+access_modifier: ( PRIVATE| PUBLIC | PROTECTED);//1
+type:            INT | BOOL | FLOAT | STRING | ID;//1
+stmt:            assign ';' //1
+    |            func_call ';'
+    |            cond_stmt
+    |            loop_stmt
+    |            BREAK ';'
+    |            CONTINUE ';'
+    |            DESTRUCT ( '[' ']' )* ID ';';
+assign:          ( var | '(' var ( ',' var )* ')' ) '=' expr;
+var:             ( ( THIS | SUPER ) '.' )? ref ( '.' ref )*;
+ref:             ID ( '[' expr ']' )*;
+
 func_call:       ( var '.' )? handle_call | READ '(' ')' | WRITE '(' expr ')';
 list:            '[' ( expr | list ) ( ','( expr | list ) )* ']';
 handle_call:     ID '(' params? ')';
