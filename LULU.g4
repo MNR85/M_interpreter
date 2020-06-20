@@ -12,7 +12,7 @@ args_var:        type('['']')*ID//1
         |        args_var ','type ( '[' ']' )* ID;
 var_def:         CONST? type var_val ( ',' var_val )* ';';//1
 var_val:         ref ('=' expr)?;//1
-expr:            expr  binary_op  expr
+expr:            expr  binary_op  expr//*** */
     |            '(' expr ')'
     |            unary_op expr
     |            const_val

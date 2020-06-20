@@ -13,7 +13,7 @@ public:
 
     void enterProgram(LULUParser::ProgramContext * ctx);
     void enterFt_def(LULUParser::Ft_defContext * ctx);
-//    void exitFt_def(LULUParser::Ft_defContext * ctx);
+    //    void exitFt_def(LULUParser::Ft_defContext * ctx);
     //    void addPointToGlobal(Variable point);
     void clearAllDefines();
 
@@ -23,27 +23,29 @@ private:
 
     void exitProgram();
 
-    void _enterFun_def(LULUParser::Fun_defContext *ctx, Type *scope);
+    Subroutine _enterFun_def(LULUParser::Fun_defContext *ctx, Type *scope);
     void _enterType_def(LULUParser::Type_defContext *ctx,Subroutine *nameSpace, Type *scope);
 
     void _enterComponent(LULUParser::ComponentContext *ctx,Subroutine *nameSpace, Type *scope);
-    void _enterVar_def(LULUParser::Var_defContext *ctx,Subroutine *nameSpace, Type *scope);
-//    void _enterVar_val(LULUParser::Var_valContext *ctx,Subroutine *nameSpace, Type *scope);
-    vector<Variable> _enterArgs_var(LULUParser::Args_varContext *ctx);
+    vector<Variable> _enterVar_def(LULUParser::Var_defContext *ctx,Subroutine *nameSpace, Type *scope);
     void _enterBlock(LULUParser::BlockContext *ctx,Subroutine *nameSpace, Type *scope);
+    Variable _enterExpr(LULUParser::ExprContext *ctx, Subroutine *nameSpace, Type *scope);
     int _enterStmt(LULUParser::StmtContext *ctx, Subroutine *nameSpace, Type *scope);
-    Variable _enterAssign(LULUParser::AssignContext *ctx,Subroutine *nameSpace, Type *scope);
-    void _enterVar(LULUParser::VarContext *ctx,Subroutine *nameSpace, Type *scope);
-    void _enterRef(LULUParser::RefContext *ctx,Subroutine *nameSpace, Type *scope);
-    void _enterExpr(LULUParser::ExprContext *ctx, Subroutine *nameSpace, Type *scope);
-    Variable _enterFunc_call(LULUParser::Func_callContext *ctx, Subroutine *nameSpace, Type *scope);
-    void _enterList(LULUParser::ListContext *ctx, Subroutine *nameSpace, Type *scope);
-    Variable _enterHandle_call(LULUParser::Handle_callContext *ctx, Subroutine *nameSpace, Type *scope);
-    Variable _enterParams(LULUParser::ParamsContext *ctx, Subroutine *nameSpace, Type *scope);
-    void _enterCond_stmt(LULUParser::Cond_stmtContext *ctx, Subroutine *nameSpace, Type *scope);
-    void _enterSwitch_body(LULUParser::Switch_bodyContext *ctx, Subroutine *nameSpace, Type *scope);
-    void _enterLoop_stmt(LULUParser::Loop_stmtContext *ctx, Subroutine *nameSpace, Type *scope);
-    void _enterConst_val(LULUParser::Const_valContext *ctx, Subroutine *nameSpace, Type *scope);
+    vector<Variable> _enterArgs_var(LULUParser::Args_varContext *ctx);
+
+    //    void _enterVar_val(LULUParser::Var_valContext *ctx,Subroutine *nameSpace, Type *scope);
+    //    vector<Variable> _enterArgs_var(LULUParser::Args_varContext *ctx);
+    //    Variable _enterAssign(LULUParser::AssignContext *ctx,Subroutine *nameSpace, Type *scope);
+    //    void _enterVar(LULUParser::VarContext *ctx,Subroutine *nameSpace, Type *scope);
+    //    void _enterRef(LULUParser::RefContext *ctx,Subroutine *nameSpace, Type *scope);
+    //    Variable _enterFunc_call(LULUParser::Func_callContext *ctx, Subroutine *nameSpace, Type *scope);
+    //    void _enterList(LULUParser::ListContext *ctx, Subroutine *nameSpace, Type *scope);
+    //    Variable _enterHandle_call(LULUParser::Handle_callContext *ctx, Subroutine *nameSpace, Type *scope);
+    //    Variable _enterParams(LULUParser::ParamsContext *ctx, Subroutine *nameSpace, Type *scope);
+    //    void _enterCond_stmt(LULUParser::Cond_stmtContext *ctx, Subroutine *nameSpace, Type *scope);
+    //    void _enterSwitch_body(LULUParser::Switch_bodyContext *ctx, Subroutine *nameSpace, Type *scope);
+    //    void _enterLoop_stmt(LULUParser::Loop_stmtContext *ctx, Subroutine *nameSpace, Type *scope);
+    //    void _enterConst_val(LULUParser::Const_valContext *ctx, Subroutine *nameSpace, Type *scope);
 
     Variable _enterUnary_op(LULUParser::Unary_opContext *ctx, Subroutine *nameSpace, Type *scope);
     Variable _enterBinary_op(LULUParser::Binary_opContext *ctx, Subroutine *nameSpace, Type *scope);
@@ -54,9 +56,11 @@ private:
 
     bool _isPrimitiveType(string type);
 
-    bool _checkSubroutineName(string name);
+    bool _checkSubroutineName(string name,vector<Variable*> args, Type *scope);
     Subroutine* _getVariableByName(string name, int access, Variable *var,Subroutine *nameSpace, Type *scope);
+    Type* _getTypeByName(string name);
     void _addFormalParametersToSubroutine(Subroutine *sub, LULUParser::Args_varContext *ctx, Type *scope);
+    bool _checkTypeName(string varName);
 
     bool _checkVariableName(string varName, Subroutine *nameSpace, Type *scope);
     //    int _getIndexFromVariableSuffix(LULUParser::ArrayVariableSuffixContext *ctx, Subroutine *nameSpace);

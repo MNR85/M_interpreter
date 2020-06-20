@@ -37,7 +37,7 @@ public:
     void addSubRoutineVariables(Variable *argument);
 
     vector<string> getSubRoutinesParameter() const;
-    void setSubRoutinesParameter(const vector<string> &getSubRoutinesParameter);
+    void setSubRoutinesParameter(const vector<Variable> &getSubRoutinesParameter);
 
     LULUParser::BlockContext* getSubRoutineStatements();
     void setSubRoutineStatements(LULUParser::BlockContext* subRoutineStatements);

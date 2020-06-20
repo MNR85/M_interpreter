@@ -13,6 +13,11 @@ void Subroutine::setSubRoutineName( string subRoutineName)
     _subRoutineName = subRoutineName;
 }
 
+void Subroutine::setSubRoutinesParameter(const vector<Variable> &getSubRoutinesParameter)
+{
+
+}
+
 LULUParser::BlockContext *Subroutine::getSubRoutineStatements()
 {
     return _subRoutineStatements;
