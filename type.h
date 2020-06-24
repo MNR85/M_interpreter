@@ -9,10 +9,11 @@ private:
     string _parent;
     string _type_name;
     vector<Variable> privateVarible, protectedVariable, publicVariable;
-    vector<Subroutine*> privateSubroutine, protectedSubroutine, publicSubroutine;
-    vector<Subroutine*> constructor;
+    vector<Subroutine> privateSubroutine, protectedSubroutine, publicSubroutine;
+    vector<Subroutine> constructor;
 public:
     Type();
+    int getWidth();
     void addVaribaleToPrivateCTX(Variable localVar);
     void addVaribaleToProtectedCTX(Variable localVar);
     void addVaribaleToPublicCTX(Variable publicVar);
@@ -22,14 +23,19 @@ public:
     void addSubroutineToConstructor(Subroutine publicSub);
 
     Subroutine global;
-    Variable getVariableByName(string name, Variable &localVar, int access);
-    Variable getSubroutineByName(string name, Subroutine &localSub, string argsType, int access);
+    string getParentName();
+    bool hasStart();
+    bool hasConstructor();
+    bool getVariableByName(string name, Variable &localVar, int access);
+    bool getSubroutineByName(string name, Subroutine &localSub, vector<Variable *> argsType, int access);
+    bool getSubroutineByName(string name, Subroutine &localSub, int access);
     string getTypeName();
     void setTypeName(string typeName);
-    string getParentName();
     void setParentName(string parentName);
+    void callConstructor(vector<Variable> constructorVars);
     string getType();
     void setType(string type);
+    string ToString();
 };
 
 #endif // TYPE_H

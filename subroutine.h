@@ -17,7 +17,7 @@ private:
     vector<Variable> returnVal;
     vector<Variable> variableCtx;
 public:
-
+    int getWidth();
     bool isReturnValReady();
     void addVariableToCtx(Variable localVar);
     bool getVariableByName(string name, Variable &localVar);
@@ -28,7 +28,7 @@ public:
 
     Variable* getReturnVal();
 
-    vector<Variable> getSubRoutineReturnType() const;
+    vector<Variable> getSubRoutineReturnVariables() const;
     void setSubRoutineReturnType(const vector<Variable> &returnVars);
 
     string getSubRoutineName();

@@ -37,11 +37,13 @@ public:
     string name;
     vector<double> data;
     bool evaluated=false;
+    bool isArray=false;
 
 public:
     Variable(){
         //lastData.resize(6);
     }
+    int getWidth(){return 4;}
     void CopyTo(Variable *dest){
         dest->name = name;
         dest->type = type;
@@ -82,6 +84,7 @@ public:
         returnS += type+" "+name+"("+to_string(data.size())+"): ";
         for(int i=0; i<data.size(); i++)
             returnS += to_string(data.at(i))+", ";
+        returnS += " Width: "+to_string(getWidth());
         returnS += "\r\n";
         return returnS;
     }

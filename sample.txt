@@ -1,21 +1,37 @@
 $$ A sample program $$
+
 type myType {
-	public int x;
-	public (float y) = function myType(int z){
-		this.x = 10;
-		if z < this.x
-			t = 23.5;
-		else {		y = 15.2;	}
-	}
+        public float a;
+        protected int b=0, b1=2;
+        bool x;
+        public (float y) =function myTy2pe(int z){
+        int m,n;
+                this.x = 10;
+                if z < this.x
+                        t = 23.5;
+                else {		y = 15.2;	}
+        }
+        public function myType(int z){
+                        this.x = 10;
+                        if z < this.x
+                                t = 23.5;
+                        else {		y = 15.2;	}
+                }
 }
+
 (int r) = function start(starting a)	{
-	const float c = 0.23;
-	int s = read();
-	float w;
-	(r, w) = f1(s);
+        const float c = 0.23;
+        int s = read();
+        float w;
+        (r, w) = f1(s);
 }
-(int x, float y) = function f1 (int b)	{
-	myType a = allocate myType();
-	y = a.x + b;
-	x = 0;
+(int x) = function f1 (int b)	{
+        myType a = allocate myType();
+        y = a.x + b;
+        x = 0;
+}
+(int x, float y) = function f2 (int b)	{
+        myType a = allocate myType();
+        y = a.x + b;
+        x = 0;
 }

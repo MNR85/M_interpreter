@@ -24,11 +24,13 @@ void compiler(string filename){
     LULULexer* lexer = new LULULexer(&input);
     CommonTokenStream* token = new CommonTokenStream((TokenSource*)lexer);
     LULUParser* parser = new LULUParser(token);
+//    cout<<"\033[31m Lexer error listener: \033[0m"<<endl;
     lexer->addErrorListener(&syntaxErrorListener);
+//    cout<<"\033[31m Parser error listener: \033[0m"<<endl;
     parser->addErrorListener(&syntaxErrorListener);
     tree::ParseTree *mtree = parser->program();
-    auto lexerErrorList = lexerErrorListener.getSyntaxErrors();
-    auto syntaxErrorList = syntaxErrorListener.getSyntaxErrors();
+//    auto lexerErrorList = lexerErrorListener.getSyntaxErrors();
+//    auto syntaxErrorList = syntaxErrorListener.getSyntaxErrors();
 
     try {
         tree::ParseTreeWalker::DEFAULT.walk(&listener,mtree); // start of msixrlistener.cpp => constructor => enterModuleRoutines
@@ -37,7 +39,7 @@ void compiler(string filename){
     } catch (const std::string& ex) {
         cout<<"Error: "<<ex.c_str()<<endl;
     } catch (...) {
-        cout<<"Unknown Error"<<endl;
+        cout<<"~Error"<<endl;
     }
 }
 

@@ -1,50 +1,47 @@
 grammar LULU;
 
 /////////////////////////////////Grammer////////////////////////////////////////
-program:         ft_def+; //1
-ft_def:          ( type_def | fun_def ); //1
-type_def:        type ID ( ':' ID )? '{' component+ '}';//1
-fun_def:         ( '(' args_var ')' '=' )? FUNCTION ID '(' args_varP? ')' block;//1
-component:       access_modifier? ( var_def | fun_def );//1
-block:           '{' ( var_def | stmt )* '}';//1
-args_varP: args_var;
-args_var:        type('['']')*ID//1
+program:         ft_def+;
+ft_def:          ( type_def | fun_def );
+type_def:        type ID ( ':' ID )? '{' component+ '}';
+component:       access_modifier? ( var_def | fun_def );
+access_modifier: ('private' | 'public' |' protected');
+var_def:         'const'? type var_val ( ',' var_val )* ';';
+type:            'int' | 'bool' | 'float' | 'string' | ID;
+var_val:         ref ('=' expr)?;
+fun_def:         ( '(' args_var ')' '=' )? 'function' ID '(' args_var? ')' block;
+args_var:        type('['']')*ID
         |        args_var ','type ( '[' ']' )* ID;
-var_def:         CONST? type var_val ( ',' var_val )* ';';//1
-var_val:         ref ('=' expr)?;//1
-expr:            expr  binary_op  expr//*** */
-    |            '(' expr ')'
-    |            unary_op expr
-    |            const_val
-    |            ALLOCATE handle_call
-    |            func_call
-    |            var
-    |            list
-    |            NIL;
-
-access_modifier: ( PRIVATE| PUBLIC | PROTECTED);//1
-type:            INT | BOOL | FLOAT | STRING | ID;//1
-stmt:            assign ';' //1
+block:           '{' ( var_def | stmt )* '}';
+stmt:            assign ';'
     |            func_call ';'
     |            cond_stmt
     |            loop_stmt
-    |            BREAK ';'
-    |            CONTINUE ';'
-    |            DESTRUCT ( '[' ']' )* ID ';';
+    |            'break' ';'
+    |            'continue' ';'
+    |            'destruct' ( '[' ']' )* ID ';';
 assign:          ( var | '(' var ( ',' var )* ')' ) '=' expr;
-var:             ( ( THIS | SUPER ) '.' )? ref ( '.' ref )*;
+var:             ( ( 'this' | 'super' ) '.' )? ref ( '.' ref )*;
 ref:             ID ( '[' expr ']' )*;
-
-func_call:       ( var '.' )? handle_call | READ '(' ')' | WRITE '(' expr ')';
+expr:            expr  binary_op  expr
+    |            '(' expr ')'
+    |            unary_op expr
+    |            const_val
+    |            'allocate' handle_call
+    |            func_call
+    |            var
+    |            list
+    |            'nil';
+func_call:       ( var '.' )? handle_call | 'read' '(' ')' | 'write' '(' expr ')';
 list:            '[' ( expr | list ) ( ','( expr | list ) )* ']';
 handle_call:     ID '(' params? ')';
 params:          expr
       |          expr ',' params;
-cond_stmt:       IF expr ( block | stmt ) ( ELSE ( block | stmt ) )?
-         |       SWITCH var '{' switch_body '}';
-switch_body:     ( CASEOF INT_CONST ':' block )+ ( DEFAULT ':' block )?;
-loop_stmt:       FOR (type? assign )? ';' expr ';' assign? block
-         |       WHILE expr ( block | stmt );
+cond_stmt:       'if' expr ( block | stmt ) ( 'else' ( block | stmt ) )?
+         |       'switch' var '{' switch_body '}';
+switch_body:     ( 'caseof' INT_CONST ':' block )+ ( 'default' ':' block )?;
+loop_stmt:       'for' (type? assign )? ';' expr ';' assign? block
+         |       'while' expr ( block | stmt );
 const_val:       INT_CONST
          |       REAL_CONST
          |       BOOL_CONST
@@ -73,32 +70,7 @@ RELATIONAL:       '==' | '!=' | '<=' | '>=' | '<' | '>';
 ARITHMETIC:       '+' | '-' | '*' | '/' | '%';
 LOGICAL:          '||' | '&&';
 BITWISE:          '&' | '|';
-/////////////////////////////////Words////////////////////////////////////////
-PRIVATE: 'private';
-PUBLIC: 'public';
-PROTECTED: 'protected';
-FOR: 'for';
-WHILE: 'while';
-INT: 'int';
-BOOL: 'bool';
-FLOAT: 'float';
-STRING: 'string';
-CONST: 'const';
-FUNCTION: 'function';
-BREAK: 'break';
-CONTINUE: 'continue';
-DESTRUCT: 'destruct';
-THIS: 'this';
-SUPER: 'super';
-ALLOCATE: 'allocate';
-READ: 'read';
-WRITE: 'write';
-NIL:'nil';
-IF: 'if';
-ELSE: 'else';
-SWITCH: 'switch';
-CASEOF: 'caseof';
-DEFAULT: 'default';
+
 /////////////////////////////////Fragments////////////////////////////-//////////
 fragment DIGIT:            [0-9];
 fragment HEX:              [a-fA-F0-9];

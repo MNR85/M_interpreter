@@ -25,35 +25,29 @@ public:
   virtual void enterType_def(LULUParser::Type_defContext * /*ctx*/) override { }
   virtual void exitType_def(LULUParser::Type_defContext * /*ctx*/) override { }
 
-  virtual void enterFun_def(LULUParser::Fun_defContext * /*ctx*/) override { }
-  virtual void exitFun_def(LULUParser::Fun_defContext * /*ctx*/) override { }
-
   virtual void enterComponent(LULUParser::ComponentContext * /*ctx*/) override { }
   virtual void exitComponent(LULUParser::ComponentContext * /*ctx*/) override { }
-
-  virtual void enterBlock(LULUParser::BlockContext * /*ctx*/) override { }
-  virtual void exitBlock(LULUParser::BlockContext * /*ctx*/) override { }
-
-  virtual void enterArgs_varP(LULUParser::Args_varPContext * /*ctx*/) override { }
-  virtual void exitArgs_varP(LULUParser::Args_varPContext * /*ctx*/) override { }
-
-  virtual void enterArgs_var(LULUParser::Args_varContext * /*ctx*/) override { }
-  virtual void exitArgs_var(LULUParser::Args_varContext * /*ctx*/) override { }
-
-  virtual void enterVar_def(LULUParser::Var_defContext * /*ctx*/) override { }
-  virtual void exitVar_def(LULUParser::Var_defContext * /*ctx*/) override { }
-
-  virtual void enterVar_val(LULUParser::Var_valContext * /*ctx*/) override { }
-  virtual void exitVar_val(LULUParser::Var_valContext * /*ctx*/) override { }
-
-  virtual void enterExpr(LULUParser::ExprContext * /*ctx*/) override { }
-  virtual void exitExpr(LULUParser::ExprContext * /*ctx*/) override { }
 
   virtual void enterAccess_modifier(LULUParser::Access_modifierContext * /*ctx*/) override { }
   virtual void exitAccess_modifier(LULUParser::Access_modifierContext * /*ctx*/) override { }
 
+  virtual void enterVar_def(LULUParser::Var_defContext * /*ctx*/) override { }
+  virtual void exitVar_def(LULUParser::Var_defContext * /*ctx*/) override { }
+
   virtual void enterType(LULUParser::TypeContext * /*ctx*/) override { }
   virtual void exitType(LULUParser::TypeContext * /*ctx*/) override { }
+
+  virtual void enterVar_val(LULUParser::Var_valContext * /*ctx*/) override { }
+  virtual void exitVar_val(LULUParser::Var_valContext * /*ctx*/) override { }
+
+  virtual void enterFun_def(LULUParser::Fun_defContext * /*ctx*/) override { }
+  virtual void exitFun_def(LULUParser::Fun_defContext * /*ctx*/) override { }
+
+  virtual void enterArgs_var(LULUParser::Args_varContext * /*ctx*/) override { }
+  virtual void exitArgs_var(LULUParser::Args_varContext * /*ctx*/) override { }
+
+  virtual void enterBlock(LULUParser::BlockContext * /*ctx*/) override { }
+  virtual void exitBlock(LULUParser::BlockContext * /*ctx*/) override { }
 
   virtual void enterStmt(LULUParser::StmtContext * /*ctx*/) override { }
   virtual void exitStmt(LULUParser::StmtContext * /*ctx*/) override { }
@@ -66,6 +60,9 @@ public:
 
   virtual void enterRef(LULUParser::RefContext * /*ctx*/) override { }
   virtual void exitRef(LULUParser::RefContext * /*ctx*/) override { }
+
+  virtual void enterExpr(LULUParser::ExprContext * /*ctx*/) override { }
+  virtual void exitExpr(LULUParser::ExprContext * /*ctx*/) override { }
 
   virtual void enterFunc_call(LULUParser::Func_callContext * /*ctx*/) override { }
   virtual void exitFunc_call(LULUParser::Func_callContext * /*ctx*/) override { }

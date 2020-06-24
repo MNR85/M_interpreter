@@ -3,6 +3,19 @@
 Subroutine::Subroutine()
 {
 }
+
+int Subroutine::getWidth()
+{
+    int size=30;
+    for(int i=0; i<variableCtx.size(); i++){
+        size+= variableCtx[i].getWidth();
+    }
+
+    for(int i=0; i<returnVal.size(); i++){
+        size+= returnVal[i].getWidth();
+    }
+    return size;
+}
 string Subroutine::getSubRoutineName()
 {
     return _subRoutineName;
@@ -15,7 +28,9 @@ void Subroutine::setSubRoutineName( string subRoutineName)
 
 void Subroutine::setSubRoutinesParameter(const vector<Variable> &getSubRoutinesParameter)
 {
-
+    for(int i=0; i<getSubRoutinesParameter.size(); i++){
+        variableCtx.push_back(getSubRoutinesParameter[i]);
+    }
 }
 
 LULUParser::BlockContext *Subroutine::getSubRoutineStatements()
@@ -31,11 +46,13 @@ void Subroutine::setSubRoutineStatements(LULUParser::BlockContext *subRoutineSta
 string Subroutine::ToString()
 {
     string returnS = "";
-    returnS += returnVal.at(0).name + "!"+_subRoutineName+"\r\n";
+    returnS += _subRoutineName+":\r\n";
+//    returnS += returnVal.at(0).name + "!"+_subRoutineName+"\r\n";
     for(int i=0; i<variableCtx.size(); i++){
-        returnS += variableCtx.at(i).ToString();
+        returnS += "#"+to_string(i)+": "+variableCtx.at(i).ToString();
     }
-    returnS += "Return Value: "+returnVal.at(0).ToString();
+//    returnS += "Return Value: "+returnVal.at(0).ToString();
+    returnS += " Width: "+to_string(getWidth());
     returnS += "\r\n";
     return returnS;
 }
@@ -107,7 +124,7 @@ Variable *Subroutine::getReturnVal()
     return &returnVal.at(0);
 }
 
-vector<Variable> Subroutine::getSubRoutineReturnType() const
+vector<Variable> Subroutine::getSubRoutineReturnVariables() const
 {
     return returnVal;
 }
