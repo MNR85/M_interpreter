@@ -34,7 +34,7 @@ public:
     string getSubRoutineName();
     void setSubRoutineName(string getSubRoutineName);
 
-    void addSubRoutineVariables(Variable *argument);
+    //void addSubRoutineVariables(Variable *argument);
 
     vector<string> getSubRoutinesParameter() const;
     void setSubRoutinesParameter(const vector<Variable> &getSubRoutinesParameter);

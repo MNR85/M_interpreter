@@ -41,6 +41,9 @@ int Type::getWidth()
     for(int i=0; i<publicSubroutine.size(); i++){
         size+= publicSubroutine[i].getWidth();
     }
+    for(int i=0; i<constructor.size(); i++){
+        size+= constructor[i].getWidth();
+    }
     return size;
 
 }
@@ -215,6 +218,10 @@ string Type::ToString()
     int s2=protectedSubroutine.size();
     for(int i=0; i<publicSubroutine.size(); i++){
         returnS+= "##"+to_string(i+s1+s2)+": "+publicSubroutine[i].ToString();
+    }
+    int s3=publicSubroutine.size();
+    for(int i=0; i<constructor.size(); i++){
+        returnS+= "##"+to_string(i+s1+s2+s3)+": "+constructor[i].ToString();
     }
     return returnS;
 }

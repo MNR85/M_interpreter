@@ -18,7 +18,7 @@ public:
     void clearAllDefines();
 
 private:
-    vector<Subroutine*> subroutines;
+    //vector<Subroutine*> subroutines;
     vector<Type*> types;
 
     void exitProgram();
@@ -50,19 +50,19 @@ private:
 
     string read();
     void write(string str);
-    bool _isPrimitiveType(string type);
+    //bool _isPrimitiveType(string type);
     //should have read, write, start functions
     bool _checkSubroutineName(string name,vector<Variable*> args, Type *scope);
     Subroutine* _getVariableByName(string name, int access, Variable *var,Subroutine *nameSpace, Type *scope);
     Type *_getTypeByName(string name);
-    void _addFormalParametersToSubroutine(Subroutine *sub, LULUParser::Args_varContext *ctx, Type *scope);
+    //void _addFormalParametersToSubroutine(Subroutine *sub, LULUParser::Args_varContext *ctx, Type *scope);
     bool _checkTypeName(string varName); // should check name with all var, func, type
     bool _checkVariableName(string varName, Subroutine *nameSpace, Type *scope);
     //    int _getIndexFromVariableSuffix(LULUParser::ArrayVariableSuffixContext *ctx, Subroutine *nameSpace);
 
-    void _updateParsingLine(antlr4::tree::TerminalNode* node);
+    //void _updateParsingLine(antlr4::tree::TerminalNode* node);
 
-    void _report(Subroutine *nameSpace, string msg);
+    //void _report(Subroutine *nameSpace, string msg);
     string printScopes();
 };
 

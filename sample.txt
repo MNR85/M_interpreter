@@ -2,6 +2,7 @@ $$ A sample program $$
 
 type myType {
         public float a;
+        int a;
         protected int b=0, b1=2;
         bool x;
         public (float y) =function myTy2pe(int z){
