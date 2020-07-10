@@ -33,7 +33,7 @@ void compiler(string filename){
 //    auto syntaxErrorList = syntaxErrorListener.getSyntaxErrors();
 
     try {
-        tree::ParseTreeWalker::DEFAULT.walk(&listener,mtree); // start of msixrlistener.cpp => constructor => enterModuleRoutines
+        tree::ParseTreeWalker::DEFAULT.walk(&listener,mtree);
     } catch (const std::exception& ex) {
         cout<<"Error: "<<ex.what()<<endl;
     } catch (const std::string& ex) {

@@ -363,7 +363,6 @@ Variable mLuluListener::_enterExpr(LULUParser::ExprContext *ctx, Subroutine *nam
         tp.callConstructor(constructorVars);
 
     }else if(ctx->func_call()!=nullptr){
-
         expRet = _enterFunc_call(ctx->func_call(),nameSpace, scope);
     }else if(ctx->var()!=nullptr){
         //        if(ctx->var()->THIS()!=nullptr){
@@ -395,9 +394,57 @@ int mLuluListener::_enterStmt(LULUParser::StmtContext *ctx, Subroutine *nameSpac
     }else if(ctx->func_call()!=nullptr){
         expRet = _enterFunc_call(ctx->func_call(),nameSpace, scope);
     }else if (ctx->cond_stmt()!=nullptr){
+        string condType=ctx->cond_stmt()->children.at(0)->getText();
+        if(stringCompare(condType, "if")){
+            Variable ifCondition=_enterExpr(ctx->cond_stmt()->expr(),nameSpace,scope);
+            if(ifCondition.getDataAt(0)){
+                if(dynamic_cast<LULUParser::StmtContext *>(ctx->children.at(3))!=nullptr)
+                {
+                    _enterStmt((LULUParser::StmtContext *)ctx->children.at(3), nameSpace,scope);
+                }else if(dynamic_cast<LULUParser::BlockContext *>(ctx->children.at(3))!=nullptr){
+                    _enterBlock((LULUParser::BlockContext *)ctx->children.at(3), nameSpace,scope);
+                }
+            }else if(ctx->cond_stmt()->children.size()>4){  // has else statement
+                if(dynamic_cast<LULUParser::StmtContext *>(ctx->children.at(5))!=nullptr)
+                {
+                    _enterStmt((LULUParser::StmtContext *)ctx->children.at(5), nameSpace,scope);
+                }else if(dynamic_cast<LULUParser::BlockContext *>(ctx->children.at(5))!=nullptr){
+                    _enterBlock((LULUParser::BlockContext *)ctx->children.at(5), nameSpace,scope);
+                }
+            }
+        }else if(stringCompare(condType,"switch")){
+            Variable var;
+            int constCont=0;
+            for(int i=0; i<ctx->cond_stmt()->switch_body()->INT_CONST().size(); i++){
+                constCont++;
+                if(var.getDataAt(0)==stod(ctx->cond_stmt()->switch_body()->INT_CONST()[i]->getText())){
+                    _enterBlock(ctx->cond_stmt()->switch_body()->block()[i], nameSpace, scope);
+                    break;
+                }
+            }
+            // default
+            if(constCont<ctx->cond_stmt()->switch_body()->INT_CONST().size() && ctx->cond_stmt()->switch_body()->block()[constCont] !=nullptr){
+                _enterBlock(ctx->cond_stmt()->switch_body()->block()[constCont], nameSpace, scope);
+            }
+
+        }else{
+            throw "undefined cond type";
+        }
 
     }else if (ctx->loop_stmt()!=nullptr){
+        string loopType=ctx->loop_stmt()->children.at(0)->getText();
+        if(stringCompare(loopType, "for")){
 
+        }
+        while(_enterExpr(ctx->loop_stmt()->expr(), nameSpace, scope).getDataAt(0)){
+            if(ctx->loop_stmt()->block()!=nullptr){
+                _enterBlock(ctx->loop_stmt()->block(), nameSpace,scope);
+            }else if(ctx->loop_stmt()->stmt()!=nullptr){
+                _enterStmt(ctx->loop_stmt()->stmt(),nameSpace,scope);
+            }
+//            if(stringCompare(loopType, "for") && ctx->loop_stmt()->assign()[1]!=nullptr){
+//            }
+        }
     }
 }
 
