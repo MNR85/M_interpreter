@@ -59,7 +59,7 @@ public:
         data.clear();
         data.push_back(d);
     }
-    double getDataAt(int idx){
+    double getDataAt(int idx){        
         return data.at(idx);
     }
     void setSize(int size){

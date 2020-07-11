@@ -50,6 +50,8 @@ private:
 
     string read();
     void write(string str);
+    string _castTypes(string type1, string type2);
+
     //bool _isPrimitiveType(string type);
     //should have read, write, start functions
     bool _checkSubroutineName(string name,vector<Variable*> args, Type *scope);

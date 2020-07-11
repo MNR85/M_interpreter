@@ -326,15 +326,72 @@ Variable mLuluListener::_enterExpr(LULUParser::ExprContext *ctx, Subroutine *nam
     if(ctx->binary_op()!=nullptr){
         Variable var1 = _enterExpr(ctx->expr()[0], nameSpace, scope);
         Variable var2 = _enterExpr(ctx->expr()[1], nameSpace, scope);
-        if(ctx->binary_op()->arithmetic()!=nullptr){
-        }else if(ctx->binary_op()->relational()!=nullptr){
-        }else if(ctx->binary_op()->bitwise()!=nullptr){
-        }else if(ctx->binary_op()->logical()!=nullptr){
+        expRet.type = _castTypes(var1.type, var2.type);
+        if(ctx->binary_op()->relational()!=nullptr || ctx->binary_op()->logical()!=nullptr)
+            expRet.type = "bool";
+        int size1=var1.getData().size();
+        int size2=var2.getData().size();
+        expRet.setSize(max(size1,size2));
+        bool relationRes=true;
+        for(int i=0; i<expRet.getData().size(); i++){
+            double d1=size1>i?var1.getDataAt(i):0;
+            double d2=size2>i?var2.getDataAt(i):0;
+            if(ctx->binary_op()->arithmetic()!=nullptr){
+                if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"+")){
+                    expRet.setDataAt(d1+d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"-")){
+                    expRet.setDataAt(d1-d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"*")){
+                    expRet.setDataAt(d1*d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"/")){
+                    expRet.setDataAt(d1/d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"%")){
+                    expRet.setDataAt((int)d1%(int)d2,i);
+                }
+            }else if(ctx->binary_op()->relational()!=nullptr){
+                if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"!=")){
+                    expRet.setDataAt(d1!=d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"==")){
+                    expRet.setDataAt(d1==d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),">=")){
+                    expRet.setDataAt(d1>=d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"<=")){
+                    expRet.setDataAt(d1<=d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),">")){
+                    expRet.setDataAt(d1>d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"<")){
+                    expRet.setDataAt(d1<d2,i);
+                }
+            }else if(ctx->binary_op()->bitwise()!=nullptr){
+                if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"&")){
+                    expRet.setDataAt((int)d1&(int)d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"|")){
+                    expRet.setDataAt((int)d1|(int)d2,i);
+                }
+            }else if(ctx->binary_op()->logical()!=nullptr){
+                if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"&&")){
+                    expRet.setDataAt((int)d1&&(int)d2,i);
+                }else if(stringCompare(ctx->binary_op()->arithmetic()->getText(),"||")){
+                    expRet.setDataAt((int)d1||(int)d2,i);
+                }
+            }
         }
     }else if(ctx->children.at(0)->getText()=="("){
         return _enterExpr(ctx->expr()[0],nameSpace, scope);
     }else if(ctx->unary_op()!=nullptr){
-
+        Variable var1 = _enterExpr(ctx->expr()[0], nameSpace, scope);
+        expRet.type = var1.type;
+        if(ctx->unary_op()->getText()=="~")
+            expRet.type="int";
+        expRet.setSize(var1.getData().size());
+        for(int i=0; i<expRet.getData().size(); i++)
+            if(ctx->unary_op()->getText()=="-"){
+                expRet.setDataAt(-var1.getDataAt(i),i);
+            }else if(ctx->unary_op()->getText()=="~"){
+                expRet.setDataAt(~(int)var1.getDataAt(i),i);
+            }else if(ctx->unary_op()->getText()=="!"){
+                expRet.setDataAt(!var1.getDataAt(i),i);
+            }
     }else if(ctx->const_val()!=nullptr){
         if(ctx->const_val()->INT_CONST()!=nullptr){
             expRet.setDataAt(stod(ctx->const_val()->INT_CONST()->getText()),0);
@@ -442,8 +499,8 @@ int mLuluListener::_enterStmt(LULUParser::StmtContext *ctx, Subroutine *nameSpac
             }else if(ctx->loop_stmt()->stmt()!=nullptr){
                 _enterStmt(ctx->loop_stmt()->stmt(),nameSpace,scope);
             }
-//            if(stringCompare(loopType, "for") && ctx->loop_stmt()->assign()[1]!=nullptr){
-//            }
+            //            if(stringCompare(loopType, "for") && ctx->loop_stmt()->assign()[1]!=nullptr){
+            //            }
         }
     }
 }
