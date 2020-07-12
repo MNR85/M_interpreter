@@ -35,8 +35,8 @@ private:
     //    void _enterVar_val(LULUParser::Var_valContext *ctx,Subroutine *nameSpace, Type *scope);
     //    vector<Variable> _enterArgs_var(LULUParser::Args_varContext *ctx);
     //    Variable _enterAssign(LULUParser::AssignContext *ctx,Subroutine *nameSpace, Type *scope);
-    void _enterVar(Variable *var, LULUParser::VarContext *ctx,Subroutine *nameSpace, Type *scope);
-    void _enterRef(Variable *var, LULUParser::RefContext *ctx,Subroutine *nameSpace, Type *scope);
+    int _enterVar(Variable &var, LULUParser::VarContext *ctx,Subroutine *nameSpace, Type *scope);
+    int _enterRef(Variable &var, LULUParser::RefContext *ctx,Subroutine *nameSpace, Type *scope);
     Variable _enterFunc_call(LULUParser::Func_callContext *ctx, Subroutine *nameSpace, Type *scope);
     vector<Variable> _enterParams(LULUParser::ParamsContext *ctx, Subroutine *nameSpace, Type *scope);
 
