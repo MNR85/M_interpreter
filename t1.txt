@@ -1,76 +1,8 @@
-type type4:type1
-{
-    int q1 = this.q; 
-    int sum;
-    string q4;
-    string q5 = super.q2;
-    string ss1;
-    int type4;
-    function type4()
-    {
-        int c,d;
-		this.q4=this.q2; 
-    }
-}
-type type1 
-{
-    private int q;
-    protected string q2;
-    protected int sum;
-    string ss1;
-    function typ1()
-    {
-        int d;
-    }
-}
-	
-type type2:type3
-{
-    string ss2;
-function type2()
-    {
-        int c,d;
-    }
-}
-type type1
-{
-    string ss3;
-function type1()
-    {
-        int c,d;
-    }
-}
-(bool bo) = function myFunc3(int c, string str ){
-    string sa ;
-    bo=1;
-}
-(bool bo) = function myFunc3(int g, string st2 ){
-    int a = 55;
-    bo=2;
-}
-
-(bool type1) = function myFunc3(int type1){
-    string type1 ;
-    type1=1;
-}
-
-function err1(type3 t3){continue;}
-(int a) = function myFunc1(int j, int i,string ss){
-  type3 f;
-  a=1;
-  type1 t1;
-  k2=5;
-
-  string k2_2;
-  k2_2='error2';
-  func(1);
-  string ss3 = myFunc1('error3',5,3);
-  string ss3_1 = myFunc1('error3',5);
-  int i=5;
-  int j=3;
-  int i;   
-  type1 t1;
-}
-function start(){
-    int st;
+(int r) = function start(starting a)	{
+        float a = 1+2*3;
+        float a1 = 2!=0;
+        float a2 = 2>=0;
+        float a3 = 2>0;
+        float a4 = 2<=0;
+        float a5 = 2<0;
 }

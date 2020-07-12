@@ -46,7 +46,7 @@ void compiler(string filename){
 int main()
 {
     cout << "Starting compile!" << endl;
-    compiler("/home/ali/maryam_antlr/sample.txt");
+    compiler("/home/ali/maryam_antlr/t2.txt");
     return 0;
 }
 
