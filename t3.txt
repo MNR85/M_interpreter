@@ -1,0 +1,26 @@
+type a1{
+int a=1;
+function valA(int b){
+a=2;
+}
+}
+(int r) = function start(starting a){
+    int b=2;
+    int c;
+    switch b{
+    caseof 1:{
+    c=1;
+    }caseof 3:{
+   c=3;
+    }caseof 5:{
+    c=5;
+    }caseof 7:{
+    c=7;
+    }caseof 9:{
+    c=9;
+    }default:{
+    c=111;
+    }
+    }
+
+}

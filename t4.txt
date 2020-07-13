@@ -1,0 +1,5 @@
+(int r) = function start(int a){
+int b=0;
+while b<10
+b=b+1;
+}

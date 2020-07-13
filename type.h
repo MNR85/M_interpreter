@@ -4,6 +4,8 @@
 
 class Type
 {
+public:
+    Type();
 private:
     string _type;
     string _parent;
@@ -12,7 +14,6 @@ private:
     vector<Subroutine> privateSubroutine, protectedSubroutine, publicSubroutine;
     vector<Subroutine> constructor;
 public:
-    Type();
     int getWidth();
     void addVaribaleToPrivateCTX(Variable localVar);
     void addVaribaleToProtectedCTX(Variable localVar);
@@ -27,8 +28,10 @@ public:
     bool hasStart();
     bool hasConstructor();
     bool getVariableByName(string name, Variable &localVar, int access);
+    bool setVariableByName(Variable &localVar);
     bool getSubroutineByName(string name, Subroutine &localSub, vector<Variable *> argsType, int access);
     bool getSubroutineByName(string name, Subroutine &localSub, int access);
+    bool setSubroutineByName(Subroutine &localSub);
     string getTypeName();
     void setTypeName(string typeName);
     void setParentName(string parentName);

@@ -22,7 +22,10 @@ DISTFILES += \
     LULULexer.tokens \
     sample.txt \
     t1.txt \
-    t2.txt
+    t2.txt \
+    t3.txt \
+    t4.txt \
+    t5.txt
 
 HEADERS += \
     LULUBaseListener.h \

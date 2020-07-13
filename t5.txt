@@ -4,10 +4,14 @@ function valA(int b){
 a=2;
 }
 }
+function valA(int b){
+a=2;
+}
 (int r) = function start(int a){
     int b=5;
     if (1>2)
         b=1;
     if (3>2)
         b=2;
+    valA(85);
 }

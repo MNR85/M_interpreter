@@ -1,4 +1,7 @@
 ﻿#include "mlululistener.h"
+#define RUNALL 1
+
+
 ///////compare strings
 bool icompare_pred(unsigned char a, unsigned char b)
 {
@@ -30,6 +33,11 @@ void mLuluListener::enterProgram(LULUParser::ProgramContext *ctx)
     if(!global.hasStart()){
         cout<<"Must define START function"<<endl;
         throw  "Must define START function";
+    }else{
+        Subroutine start;
+        global.getSubroutineByName("start",start,0);
+        _enterBlock(start.getSubRoutineStatements(),&start,&global);
+        global.setSubroutineByName(start);
     }
     cout<<printScopes();
 }
@@ -61,8 +69,8 @@ Subroutine mLuluListener::_enterFun_def(LULUParser::Fun_defContext *ctx, Type *s
         srd->setSubRoutinesParameter(_enterArgs_var(ctx->args_var()[0]));
     }
     srd->setSubRoutineStatements(ctx->block());
-    string s1 = ctx->getText();
-    _enterBlock(ctx->block(),srd,scope);
+    if(RUNALL)
+        _enterBlock(ctx->block(),srd,scope);
     return *srd;
 }
 
@@ -148,6 +156,7 @@ vector<Variable> mLuluListener::_enterArgs_var(LULUParser::Args_varContext *ctx)
     Variable tail;
     tail.name = ctx->ID()->getText();
     tail.type = ctx->type()->getText();
+    tail.checkType();
     vars.push_back(tail);
     return vars;
 }
@@ -163,8 +172,8 @@ int mLuluListener::_enterVar(Variable &var, LULUParser::VarContext *ctx, Subrout
         searchScope=&global;
         searchSpace=2;// in global
     }
-//    Variable var1;
-    int ss = _enterRef(var, ctx->ref().at(0),nameSpace, searchScope);
+    //    Variable var1;
+    int ss = _enterRef(var, ctx->ref().at(0),nameSpace, scope);
     return searchSpace==2?searchSpace:ss;
 }
 
@@ -196,7 +205,7 @@ vector<Variable> mLuluListener::_enterVar_def(LULUParser::Var_defContext *ctx, S
         Variable var;
         var.type = ctx->type()->getText();
 
-       _enterRef(var, ctx->var_val()[i]->ref(), nameSpace, scope); //mnr
+        _enterRef(var, ctx->var_val()[i]->ref(), nameSpace, scope); //mnr
         string firstChild = ctx->children.at(0)->getText();
         if(stringCompare(firstChild,"const") && ctx->var_val()[i]->expr()==nullptr){
             throw "Const variable should have init val, line: "+std::to_string(ctx->getStart()->getLine());
@@ -204,6 +213,7 @@ vector<Variable> mLuluListener::_enterVar_def(LULUParser::Var_defContext *ctx, S
         else if(ctx->var_val()[i]->expr()!=nullptr){
             var.setData(_enterExpr(ctx->var_val()[i]->expr(),nameSpace,scope).getData());
         }
+        var.checkType();
         vars.push_back(var);
     }
     return vars;
@@ -258,6 +268,7 @@ Variable mLuluListener::_enterFunc_call(LULUParser::Func_callContext *ctx, Subro
         Subroutine srd;
         if(scope->getSubroutineByName(ctx->handle_call()->ID()->getText(), srd,0)){
             _enterBlock(srd.getSubRoutineStatements(),&srd,scope);
+            scope->setSubroutineByName(srd);
         }else {
             throw "Undefined function name in current scope: "+std::to_string(ctx->getStart()->getLine());
         }
@@ -471,11 +482,11 @@ Variable mLuluListener::_enterExpr(LULUParser::ExprContext *ctx, Subroutine *nam
     }else if(ctx->var()!=nullptr){  //mnr
         Variable var;
         _enterRef(var, ctx->var()->ref()[0], nameSpace, scope);
+        expRet=var;
         if(ctx->var()->ref().size()>1){
             Variable var2;
             _enterRef(var2, ctx->var()->ref()[1], nameSpace, scope);
         }
-
     }else if(ctx->list()!=nullptr){
 
     }
@@ -494,9 +505,14 @@ int mLuluListener::_enterStmt(LULUParser::StmtContext *ctx, Subroutine *nameSpac
             Variable var;
             int searchScope=_enterVar(var, ctx->assign()->var()[i],nameSpace,scope);
             var.setData(exp.getData());
-
+            if(searchScope==0){ // in namespace
+                nameSpace->setVariableByName(var);
+            }else if(searchScope==1){   // in scope
+                scope->setVariableByName(var);
+            }else if(searchScope==2){   // in global
+                global.setVariableByName(var);
+            }
         }
-
     }else if(ctx->func_call()!=nullptr){
         expRet = _enterFunc_call(ctx->func_call(),nameSpace, scope);
     }else if (ctx->cond_stmt()!=nullptr){
@@ -522,6 +538,7 @@ int mLuluListener::_enterStmt(LULUParser::StmtContext *ctx, Subroutine *nameSpac
             }
         }else if(stringCompare(condType,"switch")){
             Variable var;
+            _enterVar(var,ctx->cond_stmt()->var(),nameSpace,scope);
             int constCont=0;
             for(int i=0; i<ctx->cond_stmt()->switch_body()->INT_CONST().size(); i++){
                 constCont++;
@@ -531,7 +548,7 @@ int mLuluListener::_enterStmt(LULUParser::StmtContext *ctx, Subroutine *nameSpac
                 }
             }
             // default
-            if(constCont<ctx->cond_stmt()->switch_body()->INT_CONST().size() && ctx->cond_stmt()->switch_body()->block()[constCont] !=nullptr){
+            if(constCont==ctx->cond_stmt()->switch_body()->INT_CONST().size() && ctx->cond_stmt()->switch_body()->block()[constCont] !=nullptr){
                 _enterBlock(ctx->cond_stmt()->switch_body()->block()[constCont], nameSpace, scope);
             }
 

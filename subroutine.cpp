@@ -46,9 +46,9 @@ void Subroutine::setSubRoutineStatements(LULUParser::BlockContext *subRoutineSta
 string Subroutine::ToString()
 {
     string returnS = "";
-    returnS += _subRoutineName+" Width: "+to_string(getWidth())+":\r\n";
+    returnS += BOLDBLUE+_subRoutineName+RESET+" Width: "+to_string(getWidth())+":\r\n";
     for(int i=0; i<variableCtx.size(); i++){
-        returnS += "#"+to_string(i)+": "+variableCtx.at(i).ToString();
+        returnS += "\t\t#"+to_string(i)+": "+variableCtx.at(i).ToString();
     }
     returnS += "\r\n";
     return returnS;
